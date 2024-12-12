@@ -22,8 +22,8 @@
     </Dropdown>
     <NavUl>
       <NavLi class="text-white" href="/">Home</NavLi>
-      <NavLi class="text-white" href="/portfolio">Portfolio</NavLi>
-      <NavLi class="text-white" href="/about">About</NavLi>
-      <NavLi class="text-white" href="contact">Contact</NavLi>
+      <NavLi class="text-white" href="/">Portfolio</NavLi>
+      <NavLi class="text-white" href="/">About</NavLi>
+      <NavLi class="text-white" href="/">Contact</NavLi>
     </NavUl>
   </Navbar>
