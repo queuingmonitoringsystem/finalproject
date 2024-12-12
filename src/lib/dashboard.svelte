@@ -1,6 +1,8 @@
 <script lang="ts">
     import { Card, Button, Label, Input, Checkbox } from 'flowbite-svelte';
   
+    const API_URL = "https://675a496f099e3090dbe4271e.mockapi.io/queue";
+
     interface Queue {
       createdAt?: Date;
       id?: number;
@@ -8,8 +10,87 @@
       status?: boolean; // 0: waiting, 1: serving, 2: served
     }
   
+    const fetchTotalQueues = async () => {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      totalQueues = data.length;  // Set the total number of queues
+      console.log(`Total Queues: ${totalQueues}`);
+    } catch (err) {
+      console.error("Error fetching total queues:", err);
+    }
+  };
+
+  // Function to update the status of a specific queue by ID
+  const NewQueueStatus = async (id: number, status: boolean) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+
+      if (response.ok) {
+        console.log(`Queue with ID ${id} updated to status: ${status}`);
+      } else {
+        console.error(`Failed to update queue with ID ${id}`);
+      }
+    } catch (err) {
+      console.error(`Error updating status for queue ID ${id}:`, err);
+    }
+  };
+
+  // Function to delete a specific queue by ID
+  const deleteQueue = async (id: number) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log(`Queue with ID ${id} deleted`);
+      } else {
+        console.error(`Failed to delete queue with ID ${id}`);
+      }
+    } catch (err) {
+      console.error(`Error deleting queue with ID ${id}:`, err);
+    }
+  };
+
+  // Function triggered by the "Next" button to continuously update the queues
+  const handleNext = async () => {
+    // If totalQueues has not been fetched, fetch it first
+    if (totalQueues === 0) {
+      await fetchTotalQueues();
+    }
+
+    // If we have reached the end, reset to the first queue
+    if (queueId > totalQueues) {
+      queueId = 1;
+    }
+
+    // Set the current queue's status to false
+    await NewQueueStatus(queueId, false);
+
+    // Delete the current queue
+    await deleteQueue(queueId);
+
+    // Move to the next queue ID
+    queueId++;
+
+    // If we have not exceeded the total, update the next queue's status to true
+    if (queueId <= totalQueues) {
+      await NewQueueStatus(queueId, true);
+    }
+
+    console.log(`Moving to queue ID ${queueId} with status true`);
+  };
+
+  // Fetch the total number of queues when the component is mounted
+  fetchTotalQueues();
+    let queueId: number = 1;  // Define the queueId variable with an initial value
     let queues: Queue[] = [];
-    const API_URL = "https://675a496f099e3090dbe4271e.mockapi.io/queue";
+    let totalQueues: number = 0;  // Total number of queues
   
     let servingNow: Queue | null = null;
     let nextQueueId: number | null = null;
@@ -81,6 +162,15 @@
   
     // Fetch queues when the component is mounted
     fetchQueues();
+
+    const setTrue = async (id: number) => {
+    await NewQueueStatus(id, true);
+  };
+
+  const setFalse = async (id:number) => {
+    await NewQueueStatus(id, false);
+  };
+    
   </script>
   
   <div class="mt-9">
@@ -112,16 +202,44 @@
           <p class="font-normal text-center text-gray-700 dark:text-gray-400 leading-tight">Number of Queues</p>
         </Card>
   
-        <Card href="/cards">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+        <Card >
+         
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Serving Next</h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">This button will delete the current queue number and will move to the next queue number.</p>
+          <button
+          on:click={handleNext}
+          class="px-4 py-2 mt-1 bg-yellow-300 text-gray-900 font-bold rounded hover:bg-yellow-600"
+        >
+          Next Queue
+        </button>
         </Card>
   
-        <Card href="/cards">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+        <Card>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Manually Update</h5>
+        <!-- Input for dynamic queue ID -->
+  <input type="number" bind:value={queueId} placeholder="Enter Queue ID" class="px-4 py-2 border rounded" />
+
+  <button
+    on:click={() => setTrue(queueId)}
+    class="px-3 py-1 bg-lime-700 text-white font-bold rounded hover:bg-green-600"
+  >
+    Set Status to True
+  </button>
+
+  <button
+    on:click={() => setFalse(queueId)}
+    class="px-3 py-1 bg-lime-700 text-white font-bold rounded hover:bg-green-600"
+  >
+    Set Status to False
+  </button>
+
+        
         </Card>
       </div>
+    </div>
+
+    <div>
+  
     </div>
   </div>
   

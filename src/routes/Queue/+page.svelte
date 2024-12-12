@@ -7,8 +7,7 @@
 <Navigation/>
 <main>
     <div class="bg-yellow-300 items-center justify-center flex">
-        This is the list of purok in Barangay Sta. Rita.
-    </div>
+Admin Queuing Page    </div>
     <Dashboard/>
      <!-- <Test/> -->
 </main>
