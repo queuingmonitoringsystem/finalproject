@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar, Dropdown, DropdownItem, DropdownHeader, DropdownDivider } from 'flowbite-svelte';
   </script>
   
@@ -22,8 +23,7 @@
     </Dropdown>
     <NavUl>
       <NavLi class="text-white" href="/">Home</NavLi>
-      <NavLi class="text-white" href="/">Portfolio</NavLi>
-      <NavLi class="text-white" href="/">About</NavLi>
-      <NavLi class="text-white" href="/">Contact</NavLi>
+      <NavLi class="text-white" href="{base}/Queue">Queue</NavLi>
+      
     </NavUl>
   </Navbar>

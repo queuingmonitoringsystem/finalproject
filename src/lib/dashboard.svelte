@@ -10,6 +10,7 @@
       status?: boolean; // 0: waiting, 1: serving, 2: served
     }
   
+    //GETTING API
     const fetchTotalQueues = async () => {
     try {
       const response = await fetch(API_URL);

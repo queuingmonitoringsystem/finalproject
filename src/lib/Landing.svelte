@@ -164,7 +164,7 @@
     <section id="introPage" class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-x-0 py-sm:py-0">
         <div class="flex flex-col lg:justify-center text-center lg:text-left lg:pl-10 gap-8 md:gap-10 lg:gap-8">
             <h2 class="font-semibold text-5xl text-white sm:text-6xl md:text-6xl">
-                Queueing<span class="text-yellow-200"> <br> Monitoring System</span>
+                Queueing<span class="text-amber-300"> <br> Monitoring System</span>
             </h2>
             <div class="relative">
                 <p class="text-base text-white sm:text-lg md:text-xl typing-text absolute top-0 left-0">
