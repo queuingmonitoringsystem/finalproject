@@ -83,6 +83,7 @@
       await NewQueueStatus(queueId, true);
     }
 
+    location.reload();
     console.log(`Moving to queue ID ${queueId} with status true`);
   };
 
@@ -165,10 +166,12 @@
 
     const setTrue = async (id: number) => {
     await NewQueueStatus(id, true);
+    location.reload();
   };
 
   const setFalse = async (id:number) => {
     await NewQueueStatus(id, false);
+    location.reload();
   };
     
   </script>
