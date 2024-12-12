@@ -2,7 +2,7 @@
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Avatar, Dropdown, DropdownItem, DropdownHeader, DropdownDivider } from 'flowbite-svelte';
   </script>
   
-  <Navbar class="text-white" style="background: #1F4529">
+  <Navbar class="text-white" style="background: #0F2A1D">
     <NavBrand href="/">
       <!-- <img src="/images/flowbite-svelte-icon-logo.svg" class="me-3 h-6 sm:h-9" alt="Flowbite Logo" /> -->
       <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">SwiftServe</span>
